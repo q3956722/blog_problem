@@ -1,6 +1,6 @@
 <?php
 
-include_once("index.php");
+include_once("connet.php");
 
 $flag = 0;
 
@@ -28,21 +28,22 @@ if(isset($_POST['action'])&&$_POST['action']=="儲存編輯"){
         $flag = 3;
     }
 }
-// if(isset($_POST['action'])&&$_POST["action"]=="Message insert") {
-//     $rep_sql = "INSERT INTO `reply` (`replyer`,`repcontent`,`repdate`) VALUES ('".$_SESSION['login']['name']."'),'".$_POST['repcontent']."','".$_POST['repdate']."'";
-//     $rep_query = mysqli_query($_con,$rep_sql);
-//     if($rep_query){
-//         $flag = 4;
-//     }    
-// }
 
-// if(isset($_GET['action'])&&$_GET['action']=="DELETE"){
-//     $rep_sql = "DELETE FROM `reply` WHERE `repid` = '".$_GET['repid']."'";
-//     $rep_query = mysqli_query($_con,$rep_sql);
-//     if($rep_query){
-//         $flag = 5;
-//     }
-// }
+if(isset($_POST['action'])&&$_POST["action"]=="Message insert") {
+    $rep_sql = "INSERT INTO `reply` (`artid`,`replyer`,`repcontent`) VALUES ('".$_GET['artid']."','".$_SESSION['login']['name']."'),'".$_POST['repcontent']."'";
+    $rep_query = mysqli_query($_con,$rep_sql);
+    if($rep_query){
+        $flag = 4;
+    }    
+}
+
+if(isset($_GET['action'])&&$_GET['action']=="DELETE"){
+    $rep_sql = "DELETE FROM `reply` WHERE `repid` = '".$_GET['repid']."'";
+    $rep_query = mysqli_query($_con,$rep_sql);
+    if($rep_query){
+        $flag = 5;
+    }
+}
 
 if(isset($_POST['action'])&&$_POST['action']=="登入帳號"){
     $sql = "SELECT `uid`,`upass`,`uname`,`uauth` FROM `user` WHERE `uid` = '".$_POST['uid']."'";
@@ -67,12 +68,13 @@ if(isset($_POST['action'])&&$_POST['action']=="登入帳號"){
     }
 }
 
-
-header("Location: index.php?success=".$flag);
-exit;
+if($flag >= 3){
+    header("Location: article.php?success="."'".$_GET['artid']."'".$flag);
+    exit;
+}else{
+    header("Location: index.php?success=".$flag);
+    exit;
+}
 
 
 ?>
-
-<!-- UPDATE `article` SET `artposter` = 'wo' WHERE `article`.`artid` = 2; -->
-<!-- `artid`='',`arttitle`='',`artcontent`='',`artposter`='',`artdate`='',`artcount`='' -->

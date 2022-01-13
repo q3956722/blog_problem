@@ -78,7 +78,7 @@ $rep_query= mysqli_query($_con,$rep_sql);
     <?php if(isset($_SESSION['login'])&&$_SESSION['login']['auth']>"1"){ ?>
     <h2>新增留言</h2>
 
-    <form action="process_art.php" method="POST">
+    <form action="process.php" method="POST">
         <label for="repcontent">文章內容</label>
         <br>
         <textarea name="repcontent" id="repcontent" cols="30" rows="10" required></textarea>
@@ -87,7 +87,7 @@ $rep_query= mysqli_query($_con,$rep_sql);
     </form>
     <?php } ?>
 
-    <input type="hidden" name="id" value="<?php echo $_GET['id'];?>">
+    <!-- <input type="hidden" name="id" value="<?php echo $_GET['artid'];?>"> -->
     <a href="index.php">回列表</a>
 </body>
 </html>
